@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Report Card System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Section header with button */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .section-header button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .section-header button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2 style="color:white;">Report Card</h2>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li onclick="showSection('students')" class="active"><i class="fas fa-user-graduate"></i> Students</li>
+                <li onclick="showSection('exams')"><i class="fas fa-book"></i> Exams</li>
+                <li onclick="showSection('marks')"><i class="fas fa-pen-nib"></i> Marks Entry</li>
+                <li onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</li>
+                <li id="adminSection" style="display:none;" onclick="showSection('admin')"><i
+                        class="fas fa-user-cog"></i> Admin
+                </li>
+                <li onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Students Section -->
+        <div id="students" class="section">
+            <div class="section-header">
+                <h2>Students</h2>
+                <button onclick="showForm()">Add Student</button>
+            </div>
+
+            <!-- Add/Update Form -->
+            <div id="studentForm" class="form-container" style="display:none;">
+                <h3 id="formTitle">Add Student</h3>
+                <form id="form">
+                    <div class="form-group">
+                        <label>Roll No</label>
+                        <input type="text" name="rollNo">
+                    </div>
+                    <div class="form-group">
+                        <label>Student ID</label>
+                        <input type="text" name="studentId">
+                    </div>
+                    <div class="form-group">
+                        <label>GR No</label>
+                        <input type="text" name="grNo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select name="className" id="className" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Division / Stream</label>
+                        <select name="divisionOrStream" id="divisionOrStream" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>DOB</label>
+                        <input type="date" name="dob">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Caste</label>
+                        <input type="text" name="caste">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" name="category">
+                    </div>
+                    <div class="form-group">
+                        <label>Religion</label>
+                        <input type="text" name="religion">
+                    </div>
+                    <div class="form-group">
+                        <label>Blood Group</label>
+                        <select name="bloodGrp" required>
+                            <option value="">Select</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact No</label>
+                        <input type="text" name="contactNo">
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit">Save</button>
+                        <button type="button" onclick="cancelForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Student Table -->
+            <div class="table-wrapper">
+                <table id="studentTable">
+                    <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Student ID</th>
+                        <th>GR No</th>
+                        <th>Full Name</th>
+                        <th>Class</th>
+                        <th>Division/Stream</th>
+                        <th>DOB</th>
+                        <th>Gender</th>
+                        <th>Caste</th>
+                        <th>Category</th>
+                        <th>Religion</th>
+                        <th>Blood Group</th>
+                        <th>Contact No</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Other Sections -->
+        <div id="exams" class="section" style="display:none;"><h2>Exams</h2>
+            <p>Coming soon...</p></div>
+        <div id="marks" class="section" style="display:none;"><h2>Marks Entry</h2>
+            <p>Coming soon...</p></div>
+        <div id="reports" class="section" style="display:none;"><h2>Reports</h2>
+            <p>Coming soon...</p></div>
+        <div id="admin" class="section" style="display:none;"><h2>Admin Section</h2>
+            <p>Manage teachers, backup database, etc.</p></div>
+
+    </main>
+</div>
+
+<script src="student.js"></script>
+<script>
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.menu ul li').forEach(li => li.classList.remove('active'));
+        document.querySelector(`.menu ul li[onclick="showSection('${id}')"]`).classList.add('active');
+    }
+
+    function logout() {
+        sessionStorage.removeItem('user');
+        window.location.href = 'login.html';
+    }
+
+    // Show admin menu if logged-in user is admin
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (user && user.isAdmin) {
+        document.getElementById('adminSection').style.display = 'block';
+    }
+</script>
+</body>
+</html>
